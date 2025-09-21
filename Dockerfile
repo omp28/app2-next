@@ -1,35 +1,35 @@
-# FROM node:18
-# WORKDIR /app
-# COPY package*.json ./
-# RUN npm install
-# COPY . .
+FROM node:18
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
 
-# # Build Next.js app
-# RUN npm run build
+# Build Next.js app
+RUN npm run build
 
-# # Start Next.js server
-# CMD ["npm", "start"]
+# Start Next.js server
+CMD ["npm", "start"]
 
 # EXPOSE 5000
 
 
 # -----------------------------
 
-# Step 1: Build stage
-FROM node:22 AS build
-WORKDIR /app
+# # Step 1: Build stage
+# FROM node:22 AS build
+# WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build 
+# COPY package*.json ./
+# RUN npm install
+# COPY . .
+# RUN npm run build 
 
-# Step 2: Serve stage
-FROM node:22
-WORKDIR /app
-COPY --from=build /app/out ./out
-RUN npm install -g serve
+# # Step 2: Serve stage
+# FROM node:22
+# WORKDIR /app
+# COPY --from=build /app/out ./out
+# RUN npm install -g serve
 
-CMD ["serve", "-s", "out", "-l", "3000"]
+# CMD ["serve", "-s", "out", "-l", "3000"]
 
-EXPOSE 3000
+# EXPOSE 3000
